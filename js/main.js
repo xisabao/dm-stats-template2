@@ -3,7 +3,11 @@
 // Step 1: Select the body of the HTML document and append an h2 element
 // with the text "We're learning D3!"
 
+d3.select("body").append("h2").text("We're learning D3!");
+
 // Step 2: Select the body again and append a div with the id dynamic-content
+
+
 
 // Step 3: Select the div you just created (using its id!) and append a
 // paragraph with some text of your choice (you can also style this if you want!)
@@ -24,16 +28,40 @@ var sandwiches = [
 // Step 1: Append a new SVG element to HTML document with D3
 // (width = 500px, height = 500px)
 
-
+var svg = d3.select("body").append("svg")
+    .attr("width", 500)
+    .attr("height", 500);
 
 // Step 2: Append a new SVG circle for every object in the sandwiches array
 
-
+svg.selectAll("circle")
+    .data(sandwiches)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d, i) {
+        return (i*80 + 60);
+    })
+    .attr("cy", 100)
+    .attr("r", function(d, i) {
+        if (d.size === "large") {
+            return 30;
+        } else {
+            return 15;
+        }
+    })
+    .attr("fill", function(d, i) {
+        if (d.price < 7.00) {
+            return "green";
+        } else {
+            return "orange";
+        }
+    })
+    .attr("stroke", "black");
 
 // Step 3: Define the following dynamic properties for each circle:
 //   - Position: Set the x/y coordinates and make sure that the circles don’t overlap each other
 //   - Radius: large sandwiches should be twice as big as small ones
-//   - Colors: use two different circle colors. One color (fill) for cheap products < 7.00 USD and one for more expensive products
+//   - Colors: use two different circle colors. One color (fill) for cheap products < 7.00 USD  and one for more expensive products
 //   - Border: Add a border to every circle (SVG property: stroke)
 
 
